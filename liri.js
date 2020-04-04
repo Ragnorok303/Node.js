@@ -21,7 +21,7 @@ if (process.argv[2] == "concert-this") {
   getConcertInfo(arguments);
 }
 if (process.argv[2] == "do-what-it-says") {
-  pickRandom();
+  doWhat();
 }
 
 
@@ -40,6 +40,19 @@ function getSongInfo(songInfo) {
       printTracks(song)
     })
   });
+
+  logAppend();
+
+  //appending song to log file
+  // fs.appendFile("log.txt", `\nSong: ${songInfo}`, function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     return;
+  //   }
+  //   else {
+  //     console.log(`Song ${songInfo.toUpperCase()} Added to log.txt file !`);
+  //   }
+  // })
 }
 function printTracks(track) {
   var albumName = track.album.name
@@ -66,7 +79,18 @@ function getMovieInfo(movieInfo) {
     console.log(`Actors: ${response.data.Actors}`);
     console.log(`Plot: ${response.data.Plot}`);
     console.log("\n=================");
-  })
+  });
+  logAppend();
+  //appending movies to log file
+  // fs.appendFile("log.txt", `\nMovie: ${movieInfo}`, function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     return;
+  //   }
+  //   else {
+  //     console.log(`Movie ${movieInfo.toUpperCase()} Added to log.txt file !`);
+  //   }
+  // })
 }
 
 //BANDS IN TOWN
@@ -84,20 +108,57 @@ function getConcertInfo(concertInfo) {
         var venueCity = venue.city
         var date = concertData.datetime
         var venueStringES6 = `The venue's name is ${venueName}. Located in ${venueCity}, ${venueState}`
-        var venueStringES5 = "The venue's name is " + venueName
         console.log(venueStringES6)
         console.log('Date:  ' + date);
         console.log("\n--------------------------\n")
       }
-      console.log(" ");
-      console.log(" ");
       console.log("Here is the data that was returned from bandsintown");
     }).catch(function (error) {
       console.log(error);
     })
-}
+  // logAppend();
+  //appending concert to log file
+  // fs.appendFile("log.txt", `\nConcert: ${concertInfo}`, function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     return;
+  //   }
+  //   else {
+  //     console.log(`Movie ${conertInfo.toUpperCase()} Added to log.txt file !`);
+  //   }
+  // })
+};
 
 //DO WHAT IT SAYS
-function pickRandom() {
-  console.log(`you are in random info `);
+function doWhat() {
+  fs.readFile("random.txt", "utf8", function (error, data) {
+    if (error) {
+      console.log("error" + error);
+      return;
+    };
+    if (data) {
+      console.log(data)
+      return;
+    }
+  })
+  logAppend();
+};
+
+function logAppend() {
+  // var listArray = ["random.txt"]
+  // fs.appendFileSync("log.txt", listArray , function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     return;
+  //   }
+  //   if (listArray) {
+  //     console.log("Added to log.txt file !" + listArray);
+  //   }
+  // })
+
+  // fs.appendFile('log.txt', String() + "\n", function (err) {
+  //   if (err) throw err
+  //   console.log("%j", req.query)
+  //   res.end("Got " + String(seq++) + " " + JSON.stringify(req.query))
+  // });
 };
