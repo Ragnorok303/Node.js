@@ -7,9 +7,9 @@ var fs = require("fs");
 var axios = require("axios");
 var Spotify = require('node-spotify-api');
 
-var arguments = ""
+var arguments = " "
 for (var i = 3; i < process.argv.length; i++) {
-  arguments = "" + arguments + " " + process.argv[i];
+  arguments = " " + arguments + " " + process.argv[i];
 }
 if (process.argv[2] == "spotify-this-song") {
   getSongInfo(arguments);
@@ -40,19 +40,6 @@ function getSongInfo(songInfo) {
       printTracks(song)
     })
   });
-
-  logAppend();
-
-  //appending song to log file
-  // fs.appendFile("log.txt", `\nSong: ${songInfo}`, function (err) {
-  //   if (err) {
-  //     console.log(err);
-  //     return;
-  //   }
-  //   else {
-  //     console.log(`Song ${songInfo.toUpperCase()} Added to log.txt file !`);
-  //   }
-  // })
 }
 function printTracks(track) {
   var albumName = track.album.name
@@ -64,6 +51,17 @@ function printTracks(track) {
   console.log(`Url:  `) + spotifyUrl;
   console.log(`Artist:  ` + artist);
   console.log(`\n............................\n`);
+
+  //appending song to log file
+  fs.appendFile("log.txt", `\nSong: ${JSON.stringify(song)}`, function (err) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    else {
+      console.log(`Song ${JSON.stringify(song)} Added to log.txt file !`);
+    }
+  })
 }
 
 //OMDB
@@ -79,18 +77,18 @@ function getMovieInfo(movieInfo) {
     console.log(`Actors: ${response.data.Actors}`);
     console.log(`Plot: ${response.data.Plot}`);
     console.log("\n=================");
+
+    //appending movie to log file
+    fs.appendFile("log.txt", `\nMovie: ${JSON.stringify(response.data)}`, function (err) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      else {
+        console.log(`Movie ${JSON.stringify(response.data)} Added to log.txt file !`);
+      }
+    })
   });
-  logAppend();
-  //appending movies to log file
-  // fs.appendFile("log.txt", `\nMovie: ${movieInfo}`, function (err) {
-  //   if (err) {
-  //     console.log(err);
-  //     return;
-  //   }
-  //   else {
-  //     console.log(`Movie ${movieInfo.toUpperCase()} Added to log.txt file !`);
-  //   }
-  // })
 }
 
 //BANDS IN TOWN
@@ -111,22 +109,22 @@ function getConcertInfo(concertInfo) {
         console.log(venueStringES6)
         console.log('Date:  ' + date);
         console.log("\n--------------------------\n")
+
+        //appending concert to log file
+        fs.appendFile("log.txt", `\nConcert: ${JSON.stringify(venueStringES6)}`, function (err) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          else {
+            console.log(`Concert ${JSON.stringify(venueStringES6)} Added to log.txt file !`);
+          }
+        })
       }
       console.log("Here is the data that was returned from bandsintown");
     }).catch(function (error) {
       console.log(error);
     })
-  // logAppend();
-  //appending concert to log file
-  // fs.appendFile("log.txt", `\nConcert: ${concertInfo}`, function (err) {
-  //   if (err) {
-  //     console.log(err);
-  //     return;
-  //   }
-  //   else {
-  //     console.log(`Movie ${conertInfo.toUpperCase()} Added to log.txt file !`);
-  //   }
-  // })
 };
 
 //DO WHAT IT SAYS
@@ -138,27 +136,17 @@ function doWhat() {
     };
     if (data) {
       console.log(data)
-      return;
+
+      //appending do what it says to log file
+      fs.appendFile("log.txt", `\nDo What: ${JSON.stringify(data)}`, function (err) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        else {
+          console.log(`Do What It Says ${JSON.stringify(data)} Added to log.txt file !`);
+        }
+      })
     }
   })
-  logAppend();
-};
-
-function logAppend() {
-  // var listArray = ["random.txt"]
-  // fs.appendFileSync("log.txt", listArray , function (err) {
-  //   if (err) {
-  //     console.log(err);
-  //     return;
-  //   }
-  //   if (listArray) {
-  //     console.log("Added to log.txt file !" + listArray);
-  //   }
-  // })
-
-  // fs.appendFile('log.txt', String() + "\n", function (err) {
-  //   if (err) throw err
-  //   console.log("%j", req.query)
-  //   res.end("Got " + String(seq++) + " " + JSON.stringify(req.query))
-  // });
 };
