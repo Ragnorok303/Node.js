@@ -1,5 +1,5 @@
 # liri-app
-![screenshot](assets/screenshot.gif)
+![screenshot](assets/screenshot.mp4)
 ## Usage
 
 1. Clone repo
