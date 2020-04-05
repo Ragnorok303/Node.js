@@ -1,5 +1,5 @@
 # liri-app
-### Link to page (https://ragnorok303.github.io/liri-app/)
+
 ## Usage
 
 1. Clone repo
@@ -7,8 +7,8 @@
 3. cd liri-app
 4. Create an .env file with your own spotify api
     ### Spotify API keys
-     SPOTIFY_ID=your-spotify-id
-     SPOTIFY_SECRET=your-spotify-secret
+    * SPOTIFY_ID=your-spotify-id
+    * SPOTIFY_SECRET=your-spotify-secret
 
 
 ## Tech Used 
